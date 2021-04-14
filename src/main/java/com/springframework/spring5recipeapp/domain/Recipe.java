@@ -1,6 +1,7 @@
 package com.springframework.spring5recipeapp.domain;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 public class Recipe {
@@ -17,6 +18,12 @@ public class Recipe {
     private String directions;
     // todo
     // private Difficulty difficulty;
+
+    // recipe owns ingredients
+    // mappedBy sets the property on the child class
+    // property called 'recipe' on each set of ingredient in child
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "recipe")
+    private Set<Ingredient> ingredients;
     @Lob
     private Byte[] image;
     // cascade = CascadeType.ALL) - Recipe owns Notes, if recipe deleted then notes deleted, but not vice-versa
@@ -86,6 +93,14 @@ public class Recipe {
 
     public void setDirections(String directions) {
         this.directions = directions;
+    }
+
+    public Set<Ingredient> getIngredients() {
+        return ingredients;
+    }
+
+    public void setIngredients(Set<Ingredient> ingredients) {
+        this.ingredients = ingredients;
     }
 
     public Byte[] getImage() {
