@@ -18,7 +18,7 @@ public class Ingredient {
     private BigDecimal amount;
 
     @OneToOne(fetch = FetchType.EAGER)
-    private UnitOfMeasure unitOfMeasure;
+    private UnitOfMeasure uom;
 
     // no cascade, deleting ingredient does not delete recipe
     @ManyToOne
@@ -28,6 +28,6 @@ public class Ingredient {
     public Ingredient(String description, BigDecimal amount,UnitOfMeasure uom) {
         this.description = description;
         this.amount = amount;
-        this.unitOfMeasure = uom;
+        this.uom = uom;
     }
 }
