@@ -1,5 +1,5 @@
 package com.springframework.spring5recipeapp.domain;
 
 public enum Difficulty {
-    EASY, MODERATE, HARD
+    EASY, KIND_OF_HARD, MODERATE, HARD
 }
