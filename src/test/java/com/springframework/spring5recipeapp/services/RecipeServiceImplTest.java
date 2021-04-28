@@ -3,17 +3,22 @@ package com.springframework.spring5recipeapp.services;
 import com.springframework.spring5recipeapp.converters.RecipeCommandToRecipe;
 import com.springframework.spring5recipeapp.converters.RecipeToRecipeCommand;
 import com.springframework.spring5recipeapp.domain.Recipe;
+import com.springframework.spring5recipeapp.exceptions.NotFoundException;
 import com.springframework.spring5recipeapp.repositories.RecipeRepository;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.http.HttpStatus;
 
 import java.util.HashSet;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 import java.util.Optional;
 
 class RecipeServiceImplTest {
@@ -48,6 +53,21 @@ class RecipeServiceImplTest {
         Set<Recipe> recipes = recipeService.getRecipes();
         assertEquals(recipes.size(),1);
         verify(recipeRepository,times(1)).findAll();
+    }
+
+    @Test
+    public void getRecipeByIdTestNotFound(){
+
+        Optional<Recipe> recipeOptional = Optional.empty();
+
+        when(recipeRepository.findById(anyLong())).thenReturn(recipeOptional);
+
+        Assertions.assertThrows(NotFoundException.class, ()->{
+            Recipe recipeReturned = recipeService.findById(1L);
+        });
+
+
+        //should go boom
     }
 
     @Test
